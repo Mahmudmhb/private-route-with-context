@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import { AuthContext } from "../../ContextProvider/AuthProvider";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const { loginUser } = useContext(AuthContext);
+  const { loginUser, loginWithGoogle } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
@@ -15,6 +15,17 @@ const Login = () => {
       .then((result) => {
         console.log(result.user);
         alert("login succesfuly");
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const handleGoogleLogin = () => {
+    loginWithGoogle()
+      .then((result) => {
+        console.log(result.user);
+        alert("login success");
         navigate("/");
       })
       .catch((error) => {
@@ -63,6 +74,12 @@ const Login = () => {
                 <button className="btn btn-primary">Login</button>
               </div>
             </form>
+            <button
+              onClick={handleGoogleLogin}
+              className="btn mt-2 btn-success"
+            >
+              login with google
+            </button>
           </div>
         </div>
       </div>
